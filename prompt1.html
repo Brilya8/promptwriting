@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <style>
+  
+	
+        body 
+		{   
+		    background-color: #92a8d1;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+		
+		   <div id="generated-prompt", background-color: #92a8d1;>
+        <h2>Generated Prompt:</h2>
+    </div>
+</head> 
+
+    <script>
+        async function generateCompletion() {
+            try {
+                // Get the prompt from the textarea
+                var prompt = document.getElementById("prompt").value;
+
+                // Prepare the request body
+                var requestBody = {
+                    prompt: prompt,
+                    max_tokens: 100 // Adjust as needed
+                };
+
+                // Send a POST request to the OpenAI API
+                var response = await fetch('https://api.openai.com/v1/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Remove the Authorization header with API key
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+
+                // Parse the response
+                var responseData = await response.json();
+                var completion = responseData.choices[0].text.trim(); // Get the completion text
+
+                // Display the completion
+                document.getElementById("completion").innerText = completion;
+            } catch (error) {
+                console.error('Error:', error.message);
+                // Display error message on the webpage
+                document.getElementById("completion").innerText = 'An error occurred: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

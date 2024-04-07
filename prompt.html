@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Prompt Generator</title>
+    <style>
+        /* CSS styles can be added here for styling */
+        body {
+            background-color: #92a8d1;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Writing Prompt Generator</h1>
+    <h2>Prompt Generation</h2>
+    <form>
+        <label for="genre">Genre:</label>
+        <select id="genre">
+            <option value="fantasy">Fantasy</option>
+            <option value="mystery">Mystery</option>
+            <option value="romance">Romance</option>
+        </select>
+        
+        <label for="setting">Setting:</label>
+        <select id="setting">
+            <option value="space">Space</option>
+            <option value="medieval">Medieval Castle</option>
+            <option value="modern">Modern City</option>
+        </select>
+        
+        <label for="characters">Characters:</label>
+        <select id="characters">
+            <option value="detective">Detective</option>
+            <option value="kingdom">Kingdom</option>
+            <option value="science-fiction">Science-Fiction</option>
+        </select>
+        
+        <label for="other-details">Other details:</label>
+        <input type="text" id="other-details">
+        
+        <button type="button" onclick="generatePrompt()">Generate</button>
+    </form>
+    
+    <div id="generated-prompt">
+        <h2>Generated Prompt:</h2>
+        <p id="prompt-text">AI-generated prompt</p>
+    </div>
+    
+    <script>
+         function generatePrompt() {
+            var prompt = document.getElementById("prompt").value;
+
+            // Sends request to OpenAI Text Generation API
+            fetch('https://api.openai.com/v1/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: prompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Displays the generated prompt
+                document.getElementById("prompt-text").textContent = data.choices[0].text.trim();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+		
+		function generatePrompt() 
+		{
+            // Redirect the user to the prompt generation page
+            window.location.href = "prompt1.html";
+        }
+		
+    </script>
+</body>
+</html>
